@@ -4,6 +4,6 @@ logging:
   level:
     org.jesus.spring: DEBUG
     com.zaxxer.hikari: DEBUG
-    org.springframework: INFO
+    org.springframework: DEBUG
     org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
