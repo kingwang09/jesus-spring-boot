@@ -1,0 +1,9 @@
+server:
+  port: 9999
+logging:
+  level:
+    org.jesus.spring: DEBUG
+    com.zaxxer.hikari: DEBUG
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
