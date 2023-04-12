@@ -42,9 +42,9 @@ jobs:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - run: |
           echo 'Hello Azure world' |
+          pwd |
           cd ${{env.APP_PATH}} |
           git pull |
           ./gradlew build |
