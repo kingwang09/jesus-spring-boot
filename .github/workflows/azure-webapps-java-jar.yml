@@ -23,7 +23,9 @@ env:
   AZURE_WEBAPP_NAME: jesus-spring-boot    # set this to the name of your Azure Web App
   JAVA_VERSION: '11'                  # set this to the Java version to use
   DISTRIBUTION: zulu                  # set this to the Java distribution
-
+  PATH: /home/azureuser/jesus-spring-boot
+  BUILD_FILE: ./build/libs/spring-0.0.1-SNAPSHOT.jar
+  LOG_FILE: jesus.log
 on:
   push:
     branches: [ "release" ]
@@ -43,7 +45,11 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - run: |
-          echo 'Hello Azure world'
+          echo 'Hello Azure world' |
+          cd ${{env.PATH}} |
+          git pull |
+          ./gradlew build |
+          nohup java -jar ${{env.BUILD_FILE}} 1 > ${{env.LOG_FILE}} &
 
 #jobs:
 #  build:
@@ -64,11 +70,18 @@ jobs:
 #      - name: Run build with Gradle Wrapper
 #        run: ./gradlew build
 #
-#      - name: Upload artifact for deployment job
-#        uses: actions/upload-artifact@v3
+##      - name: Upload artifact for deployment job
+##        uses: actions/upload-artifact@v3
+##        with:
+##          name: java-app
+##          path: '${{ github.workspace }}/build/libs/*.jar'
+#
+#      - uses: azure/login@v1
 #        with:
-#          name: java-app
-#          path: '${{ github.workspace }}/build/libs/*.jar'
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#
+#      - run: |
+#          echo 'Hello Azure world' |
 #
 #  deploy:
 #    permissions:
