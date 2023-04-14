@@ -4,7 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.jesus.spring.bible.entity.Bible;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,5 +74,15 @@ public class BibleImportService {
             index++;
         }
         return result;
+    }
+
+    public List<String> readBibleFile(String path){
+        try {
+            Path biblePath = Paths.get(path);
+            return Files.readAllLines(biblePath);
+        } catch (IOException e) {
+            log.error("read file error: {}", e.getMessage(), e);
+        }
+        return new ArrayList<>();
     }
 }
