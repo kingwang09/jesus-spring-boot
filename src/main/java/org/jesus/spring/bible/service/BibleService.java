@@ -20,18 +20,33 @@ public class BibleService {
     private final BibleRepository bibleRepository;
 
 
-    @Transactional
     public Boolean importBible(BibleImportRequest request) throws InterruptedException {
         List<String> bibleLines = bibleImportService.readBibleFile(request.getPath());
         List<Bible> bibles = new LinkedList<>();
+        int insertCount = 0;
+        int bulkCount = 100;
         for(String bibleLine : bibleLines) {
             Bible bible = bibleImportService.parsingLine(request.getTranslationVersion(), bibleLine);
             log.debug("bible: {}", bible);
             bibles.add(bible);
+
+            if(insertCount == bulkCount){
+                insert(bibles);
+                bibles = new LinkedList<>();
+                insertCount = 0;
+            }
+            insertCount++;
         }
 
-        bibleRepository.saveAllAndFlush(bibles);
-
+        if(bibles.size() > 0){
+            insert(bibles);
+        }
         return true;
+    }
+
+    @Transactional
+    public void insert(List<Bible> inserts){
+        log.debug("insert: {}", inserts.size());
+        bibleRepository.saveAllAndFlush(inserts);
     }
 }
