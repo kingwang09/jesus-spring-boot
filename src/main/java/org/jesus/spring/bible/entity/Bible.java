@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.entity;
 
 import lombok.*;
+import org.jesus.spring.bible.dto.BibleDto;
 
 import javax.persistence.*;
 
@@ -26,4 +27,13 @@ public class Bible {
 
     @Column(length = 4000)
     private String text;
+
+    public BibleDto convert(){
+        return BibleDto.builder()
+                .index(this.bibleIndex)
+                .chapter(this.chapter)
+                .number(this.chapterNumber)
+                .text(this.text)
+                .build();
+    }
 }

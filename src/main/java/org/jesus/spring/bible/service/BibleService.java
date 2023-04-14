@@ -2,6 +2,7 @@ package org.jesus.spring.bible.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.dto.BibleDto;
 import org.jesus.spring.bible.dto.BibleImportRequest;
 import org.jesus.spring.bible.entity.Bible;
 import org.jesus.spring.bible.repository.BibleRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -48,5 +50,20 @@ public class BibleService {
     public void insert(List<Bible> inserts){
         log.debug("insert: {}", inserts.size());
         bibleRepository.saveAllAndFlush(inserts);
+    }
+
+    public List<BibleDto> find(String index, Integer start, Integer number) {
+        if(number != null){
+            return convert(bibleRepository.findByIndexAndChapterAndNumber(index, start, number));
+        }
+
+        if(start != null){
+            return convert(bibleRepository.findByIndexAndChapter(index, start));
+        }
+        return convert(bibleRepository.findAllByIndex(index));
+    }
+
+    private List<BibleDto> convert(List<Bible> bibles){
+        return bibles.stream().map(Bible::convert).collect(Collectors.toList());
     }
 }
