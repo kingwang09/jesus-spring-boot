@@ -48,7 +48,7 @@ public class BibleImportServiceTest {
         };
 
         for(String line: tests){
-            Map<String, String> result = service.parsingLines(line);
+            Map<String, String> result = service.parsingLine(line);
             log.debug("parsing result: {}", result);
         }
     }
