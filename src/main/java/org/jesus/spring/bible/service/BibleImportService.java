@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,34 +16,20 @@ import java.util.stream.Stream;
 @Service
 public class BibleImportService {
 
-    private final String PATTERN_KOREAN = "^[ㄱ-ㅎ가-힣]*$";
-    private final String PATTERN_NUMBER = "^[0-9]*$";
+    private final String PATTERN_BIBLE = "([ㄱ-ㅎ가-힣])+|([\\d])+";
 
-    public boolean isKorean(String value){
-        return Pattern.matches(PATTERN_KOREAN, value);
-    }
+    public Map<Integer, String> parsingBibleIndexMap(String bibleIndexValue){
+        Map<Integer, String> result = new HashMap<>();
+        int index = 0;
+        Pattern p = Pattern.compile("([ㄱ-ㅎ가-힣])+|([\\d])+");	// 검색할 문자열 패턴
+        Matcher m = p.matcher(bibleIndexValue);			// 문자열 설정
 
-    public boolean isNumber(String value){
-        return Pattern.matches(PATTERN_NUMBER, value);
-    }
-
-    public String parsingBibleIndex(String value){
-        int index = value.indexOf(" ");
-        String indexValue = value.substring(0, index);
-        log.debug("index: {}", indexValue);
-        return indexValue;
-    }
-
-    public Map<String, Object> parsingBibleIndexMap(String bibleIndex){
-        char[] values = bibleIndex.toCharArray();
-        for(int i = 0; i < values.length; i++){
-            String value = String.valueOf(values[i]);
-
+        while (m.find()) {
+            String value = m.group();
+            log.debug("result: {}", value);
+            result.put(index, value);
+            index++;
         }
-        List<String> bibleIndexValues = bibleIndex.lines().collect(Collectors.toList());
-        bibleIndexValues.forEach((v) -> {
-            log.debug("v = {}", v);
-        });
-        return null;
+        return result;
     }
 }

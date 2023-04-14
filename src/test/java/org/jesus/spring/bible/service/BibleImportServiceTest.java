@@ -5,12 +5,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-//@SpringBootTest
+@SpringBootTest
 public class BibleImportServiceTest {
+
+    @Autowired
+    private BibleImportService service;
 
     @Test
     public void parsingBibleIndex(){
@@ -32,5 +36,11 @@ public class BibleImportServiceTest {
         while (m2.find()) {
             log.debug("한글 result: {}", m2.group());
         }
+    }
+
+    @Test
+    public void parsingTest(){
+        Map<Integer, String> values = service.parsingBibleIndexMap("삼상13:16");
+        log.debug("result: {}", values);
     }
 }
