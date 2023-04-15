@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.entity.Bible;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +44,7 @@ public class BibleImportService {
         return result;
     }
 
-    public Bible parsingLine(String translationVersion, String line){
+    public Bible parsingLine(BibleVersion translationVersion, String line){
         Map<String, String> result = new HashMap<>();
         int index = line.indexOf(" ");
         String bibleRawIndex = line.substring(0, index);

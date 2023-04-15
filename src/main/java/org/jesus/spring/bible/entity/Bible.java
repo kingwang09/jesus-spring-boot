@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.entity;
 
 import lombok.*;
+import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.dto.BibleDto;
 
 import javax.persistence.*;
@@ -17,7 +18,8 @@ public class Bible {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String translationVersion;
+    @Enumerated(EnumType.STRING)
+    private BibleVersion translationVersion;
 
     private String bibleIndex;
 

@@ -2,6 +2,7 @@ package org.jesus.spring.bible.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.dto.BibleDto;
 import org.jesus.spring.bible.dto.BibleImportRequest;
 import org.jesus.spring.bible.entity.Bible;
@@ -52,15 +53,15 @@ public class BibleService {
         bibleRepository.saveAllAndFlush(inserts);
     }
 
-    public List<BibleDto> find(String index, Integer start, Integer number) {
+    public List<BibleDto> find(BibleVersion version, String index, Integer start, Integer number) {
         if(number != null){
-            return convert(bibleRepository.findByIndexAndChapterAndNumber(index, start, number));
+            return convert(bibleRepository.findByIndexAndChapterAndNumber(version, index, start, number));
         }
 
         if(start != null){
-            return convert(bibleRepository.findByIndexAndChapter(index, start));
+            return convert(bibleRepository.findByIndexAndChapter(version, index, start));
         }
-        return convert(bibleRepository.findAllByIndex(index));
+        return convert(bibleRepository.findAllByIndex(version, index));
     }
 
     private List<BibleDto> convert(List<Bible> bibles){

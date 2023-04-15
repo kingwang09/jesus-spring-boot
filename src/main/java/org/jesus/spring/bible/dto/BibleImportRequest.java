@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.jesus.spring.bible.constant.BibleVersion;
 
 @Getter
 @Builder
@@ -12,5 +13,5 @@ import lombok.NoArgsConstructor;
 public class BibleImportRequest {
 
     private String path;
-    private String translationVersion;
+    private BibleVersion translationVersion;
 }

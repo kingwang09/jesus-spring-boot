@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.dto.BibleImportRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class BibleServiceTest{
     public void importBibleTest() throws InterruptedException {
         BibleImportRequest request = BibleImportRequest.builder()
                 .path("/Users/test/file_import/translation.txt")
-                .translationVersion("개역개정")
+                .translationVersion(BibleVersion.KOREAN)
                 .build();
         bibleService.importBible(request);
     }
