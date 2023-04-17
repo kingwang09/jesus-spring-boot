@@ -27,8 +27,11 @@ public class BibleService {
         List<String> bibleLines = bibleImportService.readBibleFile(request.getPath());
         List<Bible> bibles = new LinkedList<>();
         int insertCount = 0;
-        int bulkCount = 100;
+        int bulkCount = 50;
         for(String bibleLine : bibleLines) {
+            if(bibleLine == null || bibleLine.isBlank()){
+                continue;
+            }
             Bible bible = bibleImportService.parsingLine(request.getTranslationVersion(), bibleLine);
             log.debug("bible: {}", bible);
             bibles.add(bible);
