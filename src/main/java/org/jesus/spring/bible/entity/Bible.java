@@ -21,6 +21,8 @@ public class Bible {
     @Enumerated(EnumType.STRING)
     private BibleVersion translationVersion;
 
+//    @Enumerated(EnumType.STRING)
+//    private BibleIndex bibleIndex;
     private String bibleIndex;
 
     private Integer chapter;
@@ -32,7 +34,8 @@ public class Bible {
 
     public BibleDto convert(){
         return BibleDto.builder()
-                .index(this.bibleIndex)
+                //.shortIndex(this.translationVersion == BibleVersion.KING_JAMES ? this.bibleIndex.getEnglishShortIndex() : this.bibleIndex.getKoreanShortIndex())
+                .shortIndex(this.bibleIndex)
                 .chapter(this.chapter)
                 .number(this.chapterNumber)
                 .text(this.text)

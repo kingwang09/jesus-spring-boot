@@ -2,6 +2,7 @@ package org.jesus.spring.bible.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.constant.BibleIndex;
 import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.dto.BibleDto;
 import org.jesus.spring.bible.dto.BibleImportRequest;
@@ -50,6 +51,33 @@ public class BibleService {
         return true;
     }
 
+    public Boolean importEnglishBible(BibleImportRequest request) throws InterruptedException {
+        List<String> bibleLines = bibleImportService.readBibleFile(request.getPath());
+        List<Bible> bibles = new LinkedList<>();
+        int insertCount = 0;
+        int bulkCount = 50;
+        for(String bibleLine : bibleLines) {
+            if(bibleLine == null || bibleLine.isBlank()){
+                continue;
+            }
+            Bible bible = bibleImportService.parsingLineByEnglish(request.getTranslationVersion(), bibleLine);
+            log.debug("bible(english): {}", bible);
+            bibles.add(bible);
+
+            if(insertCount == bulkCount){
+                insert(bibles);
+                bibles = new LinkedList<>();
+                insertCount = 0;
+            }
+            insertCount++;
+        }
+
+        if(bibles.size() > 0){
+            insert(bibles);
+        }
+        return true;
+    }
+
     @Transactional
     public void insert(List<Bible> inserts){
         log.debug("insert: {}", inserts.size());
@@ -69,5 +97,10 @@ public class BibleService {
 
     private List<BibleDto> convert(List<Bible> bibles){
         return bibles.stream().map(Bible::convert).collect(Collectors.toList());
+    }
+
+
+    public int migrationUpdateBibleIndex(BibleIndex bibleIndex){
+        return bibleRepository.bulkUpdateBibleIndex(bibleIndex.toString(), bibleIndex.getKoreanIndex());
     }
 }

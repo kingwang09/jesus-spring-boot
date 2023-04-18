@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BibleDto {
-    private String index;
+    private String shortIndex;
     private Integer chapter;
     private Integer number;
     private String text;
