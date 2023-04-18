@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.constant.BibleIndex;
 import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.dto.BibleImportRequest;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,26 @@ public class BibleServiceTest{
     @Test
     public void importBibleTest() throws InterruptedException {
         BibleImportRequest request = BibleImportRequest.builder()
-                .path("/Users/test/file_import/translation.txt")
-                .translationVersion(BibleVersion.KOREAN)
+                .path("/Users/test/file_import/translation_improve.txt")
+                .translationVersion(BibleVersion.KOREAN_IMPROVE)
                 .build();
         bibleService.importBible(request);
+    }
+
+    @Test
+    public void importEnglishBibleTest() throws InterruptedException {
+        BibleImportRequest request = BibleImportRequest.builder()
+                .path("/Users/test/file_import/kjv.txt")
+                .translationVersion(BibleVersion.KING_JAMES)
+                .build();
+        bibleService.importEnglishBible(request);
+    }
+
+    @Test
+    public void migrationBibleIndex(){
+        for(BibleIndex bibleIndex : BibleIndex.values()) {
+            int bulkResult = bibleService.migrationUpdateBibleIndex(bibleIndex);
+            log.debug("result: {}", bulkResult);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.entity;
 
 import lombok.*;
+import org.jesus.spring.bible.constant.BibleIndex;
 import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.dto.BibleDto;
 
@@ -21,9 +22,8 @@ public class Bible {
     @Enumerated(EnumType.STRING)
     private BibleVersion translationVersion;
 
-//    @Enumerated(EnumType.STRING)
-//    private BibleIndex bibleIndex;
-    private String bibleIndex;
+    @Enumerated(EnumType.STRING)
+    private BibleIndex bibleIndex;
 
     private Integer chapter;
 
@@ -34,8 +34,7 @@ public class Bible {
 
     public BibleDto convert(){
         return BibleDto.builder()
-                //.shortIndex(this.translationVersion == BibleVersion.KING_JAMES ? this.bibleIndex.getEnglishShortIndex() : this.bibleIndex.getKoreanShortIndex())
-                .shortIndex(this.bibleIndex)
+                .shortIndex(this.translationVersion == BibleVersion.KING_JAMES ? this.bibleIndex.getEnglishShortIndex() : this.bibleIndex.getKoreanShortIndex())
                 .chapter(this.chapter)
                 .number(this.chapterNumber)
                 .text(this.text)

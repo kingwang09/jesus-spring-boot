@@ -1,6 +1,7 @@
 package org.jesus.spring.bible.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.spring.bible.constant.BibleIndex;
 import org.jesus.spring.bible.constant.BibleVersion;
 import org.jesus.spring.bible.entity.Bible;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,7 @@ public class BibleImportService {
 
         return Bible.builder()
                 .translationVersion(translationVersion)
-                //.bibleIndex(BibleIndex.findByKoreanShortIndex(bibleShortIndex))
+                .bibleIndex(BibleIndex.findByKoreanShortIndex(bibleShortIndex))
                 .chapter(bibleChapter)
                 .chapterNumber(bibleChapterNumber)
                 .text(bibleText)
@@ -77,7 +78,7 @@ public class BibleImportService {
 
         return Bible.builder()
                 .translationVersion(translationVersion)
-                //.bibleIndex(BibleIndex.findByEnglishShortIndex(bibleShortIndex))
+                .bibleIndex(BibleIndex.findByEnglishShortIndex(bibleShortIndex))
                 .chapter(bibleChapter)
                 .chapterNumber(bibleChapterNumber)
                 .text(bibleText)

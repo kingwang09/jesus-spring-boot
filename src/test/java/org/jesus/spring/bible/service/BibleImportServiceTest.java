@@ -52,4 +52,19 @@ public class BibleImportServiceTest {
             log.debug("parsing result: {}", result);
         }
     }
+
+
+    @Test
+    public void parsingLineByEnglishTest(){
+        String[] tests = {
+                "1Sm1:1",
+                "Ruth4:20",
+                "2Sm14:12"
+        };
+        for(String value: tests){
+            Map<Integer,String> result = service.parsingBibleIndexMapByEnglish(value);
+            log.debug("value={}, result={}", value, result);
+        }
+    }
+
 }

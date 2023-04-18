@@ -85,14 +85,15 @@ public class BibleService {
     }
 
     public List<BibleDto> find(BibleVersion version, String index, Integer start, Integer number) {
+        BibleIndex shortBibleIndex = BibleIndex.findByKoreanShortIndex(index);
         if(number != null){
-            return convert(bibleRepository.findByIndexAndChapterAndNumber(version, index, start, number));
+            return convert(bibleRepository.findByIndexAndChapterAndNumber(version, shortBibleIndex, start, number));
         }
 
         if(start != null){
-            return convert(bibleRepository.findByIndexAndChapter(version, index, start));
+            return convert(bibleRepository.findByIndexAndChapter(version, shortBibleIndex, start));
         }
-        return convert(bibleRepository.findAllByIndex(version, index));
+        return convert(bibleRepository.findAllByIndex(version, shortBibleIndex));
     }
 
     private List<BibleDto> convert(List<Bible> bibles){
