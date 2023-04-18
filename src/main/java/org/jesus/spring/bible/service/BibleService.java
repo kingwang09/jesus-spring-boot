@@ -100,7 +100,8 @@ public class BibleService {
     }
 
 
+    @Transactional
     public int migrationUpdateBibleIndex(BibleIndex bibleIndex){
-        return bibleRepository.bulkUpdateBibleIndex(bibleIndex.toString(), bibleIndex.getKoreanIndex());
+        return bibleRepository.bulkUpdateBibleIndex(bibleIndex.toString(), bibleIndex.getKoreanShortIndex());
     }
 }
