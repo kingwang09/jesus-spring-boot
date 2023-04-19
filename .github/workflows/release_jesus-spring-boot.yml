@@ -46,7 +46,9 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
-            echo "hello...: ${JESUS_APP_JAR}"
+            echo "remove latest.jar"
             rm ${{ secrets.REMOTE_TARGET }}/latest.jar
-            ln -s ${{ secrets.REMOTE_TARGET }}/${JESUS_APP_JAR} ${{ secrets.REMOTE_TARGET }}/latest.jar
-            sudo systemctl restart ${JESUS_APP_NAME}.service
+            echo "ln -s jesus-spring -> latest.jar"
+            ln -s ${{ secrets.REMOTE_TARGET }}/jesus-spring-0.0.1.jar ${{ secrets.REMOTE_TARGET }}/latest.jar
+            echo "restart jesus-spring service"
+            sudo systemctl restart jesus-spring.service
