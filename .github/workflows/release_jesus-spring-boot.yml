@@ -12,7 +12,7 @@ on:
 env:
   APP_NAME: jesus-spring
   APP_VERSION: 0.0.1
-  DEPLOY_VERSION: $GITHUB_SHA
+  DEPLOY_VERSION: ${GITHUB_SHA}
 
 jobs:
   build-and-deploy:
@@ -30,7 +30,7 @@ jobs:
         run: ./gradlew bootJar
 
       - name: rename jar deploy version
-        run: mv build/libs/$APP_NAME-$APP_VERSION.jar build/libs/$APP_NAME-$APP_VERSION-$DEPLOY_VERSION.jar
+        run: mv build/libs/${APP_NAME}-${APP_VERSION}.jar build/libs/${APP_NAME}-${APP_VERSION}-${DEPLOY_VERSION}.jar
 
       - name: Deploy to Staging server
         uses: easingthemes/ssh-deploy@main
@@ -47,5 +47,5 @@ jobs:
             ls -al
           SCRIPT_AFTER: |
             rm ${{ secrets.REMOTE_TARGET }}/latest.jar
-            ln -s ${{ secrets.REMOTE_TARGET }}/$APP_NAME-$APP_VERSION-$DEPLOY_VERSION.jar ${{ secrets.REMOTE_TARGET }}/latest.jar
-            sudo systemctl restart $APP_NAME.service
+            ln -s ${{ secrets.REMOTE_TARGET }}/${APP_NAME}-${APP_VERSION}-${DEPLOY_VERSION}.jar ${{ secrets.REMOTE_TARGET }}/latest.jar
+            sudo systemctl restart ${APP_NAME}.service
