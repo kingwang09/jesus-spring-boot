@@ -42,14 +42,14 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/dist/, /node_modules/"
-          APP_NAME: jesus-spring
-          APP_VERSION: 0.0.1
-          APP_JAR: jesus-spring-0.0.1.jar
+          JESUS_APP_NAME: jesus-spring
+          JESUS_APP_VERSION: 0.0.1
+          JESUS_APP_JAR: jesus-spring-0.0.1.jar
           SCRIPT_BEFORE: |
             whoami
             ls -al
           SCRIPT_AFTER: |
-            echo "hello...: ${APP_JAR}"
-            rm ${{ secrets.REMOTE_TARGET }}/latest.jar
-            ln -s ${{ secrets.REMOTE_TARGET }}/${APP_JAR} ${{ secrets.REMOTE_TARGET }}/latest.jar
-            sudo systemctl restart ${APP_NAME}.service
+            echo "hello...: ${JESUS_APP_JAR}"
+            rm ${{ TARGET }}/latest.jar
+            ln -s ${{ TARGET }}/${JESUS_APP_JAR} ${{ TARGET }}/latest.jar
+            sudo systemctl restart ${JESUS_APP_NAME}.service
