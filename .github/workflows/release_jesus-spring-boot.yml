@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
 
 env:
-  APP_NAME: jesus-spring
-  APP_VERSION: 0.0.1
-  APP_JAR: ${APP_NAME}-${APP_VERSION}.jar
+  JESUS_APP_NAME: jesus-spring
+  JESUS_APP_VERSION: 0.0.1
+  JESUS_APP_JAR: jesus-spring-0.0.1.jar
 
 jobs:
   build-and-deploy:
@@ -42,9 +42,6 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/dist/, /node_modules/"
-          JESUS_APP_NAME: jesus-spring
-          JESUS_APP_VERSION: 0.0.1
-          JESUS_APP_JAR: jesus-spring-0.0.1.jar
           SCRIPT_BEFORE: |
             whoami
             ls -al
