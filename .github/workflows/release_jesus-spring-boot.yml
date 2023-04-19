@@ -50,6 +50,6 @@ jobs:
             ls -al
           SCRIPT_AFTER: |
             echo "hello...: ${JESUS_APP_JAR}"
-            rm ${{ TARGET }}/latest.jar
-            ln -s ${{ TARGET }}/${JESUS_APP_JAR} ${{ TARGET }}/latest.jar
+            rm ${{ secrets.REMOTE_TARGET }}/latest.jar
+            ln -s ${{ secrets.REMOTE_TARGET }}/${JESUS_APP_JAR} ${{ secrets.REMOTE_TARGET }}/latest.jar
             sudo systemctl restart ${JESUS_APP_NAME}.service
