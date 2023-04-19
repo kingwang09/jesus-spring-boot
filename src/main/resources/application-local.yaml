@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:jesus_spring_boot
+      username: sa
+  h2:
+    console:
+      enabled: true

@@ -1,9 +1,22 @@
 server:
   port: 9999
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        format_sql: true
+        hbm2ddl.auto: create
+    hibernate:
+      ddl-auto: create
+  h2:
+    console:
+      enabled: true
 logging:
   level:
     org.jesus.spring: DEBUG
     com.zaxxer.hikari: DEBUG
-    org.springframework: DEBUG
+    org.springframework: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type: TRACE
