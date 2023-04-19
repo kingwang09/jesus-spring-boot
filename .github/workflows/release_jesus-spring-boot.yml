@@ -46,6 +46,7 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
+            echo ${{ secrets.REMOTE_TARGET }}
             rm ${{ secrets.REMOTE_TARGET }}/latest.jar
             ln -s ${{ secrets.REMOTE_TARGET }}/${APP_JAR} ${{ secrets.REMOTE_TARGET }}/latest.jar
             sudo systemctl restart ${APP_NAME}.service
