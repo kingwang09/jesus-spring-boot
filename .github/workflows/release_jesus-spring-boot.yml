@@ -42,6 +42,9 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
           EXCLUDE: "/dist/, /node_modules/"
+          APP_NAME: jesus-spring
+          APP_VERSION: 0.0.1
+          APP_JAR: jesus-spring-0.0.1.jar
           SCRIPT_BEFORE: |
             whoami
             ls -al
