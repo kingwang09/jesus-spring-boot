@@ -12,7 +12,7 @@ on:
 env:
   APP_NAME: jesus-spring
   APP_VERSION: 0.0.1
-  APP_JAR: "${APP_NAME}-${APP_VERSION}.jar"
+  APP_JAR: ${APP_NAME}-${APP_VERSION}.jar
 
 jobs:
   build-and-deploy:
@@ -46,7 +46,7 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
-            echo ${{ secrets.REMOTE_TARGET }}
+            echo "hello...: ${APP_JAR}"
             rm ${{ secrets.REMOTE_TARGET }}/latest.jar
             ln -s ${{ secrets.REMOTE_TARGET }}/${APP_JAR} ${{ secrets.REMOTE_TARGET }}/latest.jar
             sudo systemctl restart ${APP_NAME}.service
