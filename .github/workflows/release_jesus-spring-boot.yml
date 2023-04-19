@@ -9,6 +9,10 @@ on:
       - release
   workflow_dispatch:
 
+env:
+  APP_NAME: jesus-spring
+  APP_VERSION: 0.0.1
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -24,13 +28,8 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew bootJar
 
-#      - name: Upload artifact for deployment job
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: java-app
-#          path: '${{ github.workspace }}/build/libs/spring-0.0.1-SNAPSHOT.jar'
-
-# build된 파일을 build 버전에 맞게 이름 변경
+      - name: rename jar deploy version
+        run: mv build/libs/$APP_NAME-$APP_VERSION.jar build/libs/$APP_NAME-$APP_VERSION-${{GITHUB_SHA}}.jar
 
       - name: Deploy to Staging server
         uses: easingthemes/ssh-deploy@main
@@ -46,30 +45,6 @@ jobs:
             whoami
             ls -al
           SCRIPT_AFTER: |
-            whoami
-            ls -al
-            echo $RSYNC_STDOUT
-
-# 서버 재기동 (gracefull restart)
-
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: build
-#    environment:
-#      name: 'Production'
-#      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-#
-#    steps:
-#      - name: Download artifact from build job
-#        uses: actions/download-artifact@v2
-#        with:
-#          name: java-app
-#
-#      - name: Deploy to Azure Web App
-#        id: deploy-to-webapp
-#        uses: azure/webapps-deploy@v2
-#        with:
-#          app-name: 'jesus-spring-boot'
-#          slot-name: 'Production'
-#          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E96DF23BA8B146D78C1C54CB60EE91D0 }}
-#          package: 'spring-0.0.1-SNAPSHOT.jar'
+            rm ${{ secrets.REMOTE_TARGET }}/latest.jar
+            ln -s ${{ secrets.REMOTE_TARGET }}/$APP_NAME-$APP_VERSION-${{GITHUB_SHA}}.jar ${{ secrets.REMOTE_TARGET }}/latest.jar
+            sudo systemctl restart $APP_NAME.service
