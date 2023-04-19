@@ -50,6 +50,5 @@ jobs:
             rm ${{ secrets.REMOTE_TARGET }}/latest.jar
             echo "ln -s jesus-spring -> latest.jar"
             ln -s ${{ secrets.REMOTE_TARGET }}/jesus-spring-0.0.1.jar ${{ secrets.REMOTE_TARGET }}/latest.jar
-            echo "restart jesus-spring service"
-            sudo systemctl daemon-reload
+            echo "restart jesus-spring service...."
             sudo systemctl restart jesus-spring.service
