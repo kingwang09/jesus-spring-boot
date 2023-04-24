@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,5 +29,14 @@ public class BibleController {
             @RequestParam(required = false) Integer chapter,
             @RequestParam(required = false) Integer number){
         return bibleService.find(version, index, chapter, number);
+    }
+
+    @GetMapping("/text")
+    public List<String> findText(
+            @RequestParam(required = false, defaultValue = "KOREAN") BibleVersion version,
+            @RequestParam String index,
+            @RequestParam(required = false) Integer chapter,
+            @RequestParam(required = false) Integer number){
+        return bibleService.find(version, index, chapter, number).stream().map(BibleDto::getText).collect(Collectors.toList());
     }
 }
