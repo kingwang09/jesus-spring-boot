@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +14,7 @@ public class RegxTest {
 
     @Test
     public void test(){
+        Random random = new Random();
         String value = "1Sm13:16";
         Pattern p = Pattern.compile("[a-zA-Z]+|([\\d])+");    // 검색할 문자열 패턴 : 숫자
         Matcher m = p.matcher(value);            // 문자열 설정

@@ -28,7 +28,7 @@ public class BibleService {
         List<String> bibleLines = bibleImportService.readBibleFile(request.getPath());
         List<Bible> bibles = new LinkedList<>();
         int insertCount = 0;
-        int bulkCount = 50;
+        int bulkCount = 1000;
         for(String bibleLine : bibleLines) {
             if(bibleLine == null || bibleLine.isBlank()){
                 continue;
@@ -55,7 +55,7 @@ public class BibleService {
         List<String> bibleLines = bibleImportService.readBibleFile(request.getPath());
         List<Bible> bibles = new LinkedList<>();
         int insertCount = 0;
-        int bulkCount = 50;
+        int bulkCount = 5000;
         for(String bibleLine : bibleLines) {
             if(bibleLine == null || bibleLine.isBlank()){
                 continue;

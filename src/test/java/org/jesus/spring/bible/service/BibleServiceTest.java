@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @Slf4j
 @SpringBootTest
-@ActiveProfiles("dev")
+@ActiveProfiles("azure")
 public class BibleServiceTest{
 
     @Autowired
@@ -20,8 +20,8 @@ public class BibleServiceTest{
     @Test
     public void importBibleTest() throws InterruptedException {
         BibleImportRequest request = BibleImportRequest.builder()
-                .path("/Users/test/file_import/translation_improve.txt")
-                .translationVersion(BibleVersion.KOREAN_IMPROVE)
+                .path("/Users/hyungeun.jin/file_import/translation_standard.txt")
+                .translationVersion(BibleVersion.KOREAN_STANDARD)
                 .build();
         bibleService.importBible(request);
     }
@@ -29,7 +29,7 @@ public class BibleServiceTest{
     @Test
     public void importEnglishBibleTest() throws InterruptedException {
         BibleImportRequest request = BibleImportRequest.builder()
-                .path("/Users/test/file_import/kjv.txt")
+                .path("/Users/hyungeun.jin/file_import/kjv.txt")
                 .translationVersion(BibleVersion.KING_JAMES)
                 .build();
         bibleService.importEnglishBible(request);

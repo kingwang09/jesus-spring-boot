@@ -33,6 +33,7 @@ dependencies {
 	//db
 	runtimeOnly 'com.h2database:h2'
 	implementation 'mysql:mysql-connector-java:8.0.21'
+	implementation files('libs/fmjdbc.jar')
 
 
 	//redis client
